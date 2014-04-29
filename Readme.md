@@ -1,4 +1,4 @@
-# JSON Schema Defaults
+# JSON Schema Defaults  [![Build Status](https://travis-ci.org/chute/json-schema-defaults.svg?branch=master)](https://travis-ci.org/chute/json-schema-defaults)
 
 > Generate JSON object from default values in JSON Schema
 
