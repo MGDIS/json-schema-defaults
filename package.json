@@ -23,9 +23,6 @@
     "schema"
   ],
   "license": "MIT",
-  "ignore": [
-    "test"
-  ],
   "devDependencies": {
     "karma": "~0.12.14",
     "jasmine-node": "mhevery/jasmine-node#Jasmine2.0",
