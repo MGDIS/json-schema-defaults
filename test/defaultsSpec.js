@@ -51,6 +51,25 @@ describe("defaults", function() {
     })).toEqual({});
   });
 
+  it("sets a falsy value", function() {
+    expect(defaults({
+      "type": "object",
+      "properties": {
+        "margin": {
+          "type": "integer",
+          "default": 0
+        },
+        "render": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    })).toEqual({
+      margin: 0,
+      render: false
+    });
+  });
+
   it("returns empty object if nested object's properties are not present", function() {
     expect(defaults({
       "title": "Wall",
