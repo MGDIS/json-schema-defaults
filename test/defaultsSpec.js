@@ -183,4 +183,161 @@ describe("defaults", function() {
     });
   });
 
+  it('returns defaults if they are present in reference', function () {
+    expect(defaults({
+      "type": "object",
+      "properties": {
+        "per_page": {
+          "$ref": "#/definitions/per_page"
+        },
+        "sort": {
+          "type": "string"
+        }
+      },
+      "definitions": {
+        "per_page": {
+          "type": "integer",
+          "default": 30
+        }
+      }
+    })).toEqual({
+      per_page: 30
+    });
+  });
+
+  it('should not throw exception if reference is not correct', function () {
+    expect(defaults({
+      "type": "object",
+      "properties": {
+        "per_page": {
+          "$ref": "#/definitions/page_per"
+        },
+        "sort": {
+          "type": "string"
+        }
+      },
+      "definitions": {
+        "per_page": {
+          "type": "integer",
+          "default": 30
+        }
+      }
+    })).toEqual({});
+  });
+
+  it('returns defaults if they are present in nested reference', function () {
+    expect(defaults({
+      "type": "object",
+      "properties": {
+        "foo": {
+          "$ref": "#/definitions/foo"
+        },
+        "sort": {
+          "type": "string"
+        }
+      },
+      "definitions": {
+        "foo": {
+          "type": "object",
+          "properties": {
+            "per_page": {
+              "$ref": "#/definitions/per_page"
+            }
+          }
+        },
+        "per_page": {
+          "type": "integer",
+          "default": 30
+        }
+      }
+    })).toEqual({
+      foo: {
+        per_page: 30
+      }
+    });
+  });
+  
+  it('should merge objects from "allOf" list and extract defaults from result object', function () {
+    expect(defaults({
+      "type": "object",
+      "properties": {
+        "per_page": {
+          "$ref": "#/definitions/per_page"
+        },
+        "per_page_big": {
+          "allOf": [
+            {"$ref": "#/definitions/per_page"},
+            {"default": 50}
+          ]
+
+        },
+        "sort": {
+          "type": "string"
+        }
+      },
+      "definitions": {
+        "per_page": {
+          "type": "integer",
+          "default": 30
+        }
+      }
+    })).toEqual({
+      per_page: 30,
+      per_page_big: 50
+    });
+
+    var res = defaults({
+      "type": "object",
+      "properties": {
+        "farewell_to_arms": {
+          "allOf": [
+            {"$ref": "#/definitions/book"},
+            {"properties": {
+              "price": {
+                "default": 30
+              }
+            }}
+          ]
+        },
+        "for_whom_the_bell_tolls": {
+          "allOf": [
+            {"$ref": "#/definitions/book"},
+            {"properties": {
+              "price": {
+                "default": 100
+              }
+            }}
+          ]
+        }
+      },
+      "definitions": {
+        "book": {
+          "type": "object",
+          "properties": {
+            "author": {
+              "type": "string",
+              "default": "Hemingway"
+            },
+            "price": {
+              "type": "integer",
+              "default": 10
+            }
+          }
+        }
+      }
+    });
+
+    expect(res).toEqual({
+      farewell_to_arms: {
+        author: "Hemingway",
+        price: 30
+      },
+      for_whom_the_bell_tolls: {
+        author: "Hemingway",
+        price: 100
+      }
+    });
+
+  });
+
 });
