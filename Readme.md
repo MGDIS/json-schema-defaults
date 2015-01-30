@@ -108,3 +108,13 @@ Or individually
 # in browser
 ./node_modules/karma/bin/karma start
 ```
+
+
+## Contributors
+
+* Eugene Tsypkin @jhony-chikens
+
+
+## License
+
+(c) 2015 Chute Corporation. Released under the terms of the MIT License.
