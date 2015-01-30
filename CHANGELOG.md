@@ -1,3 +1,9 @@
+<a name="0.1.0"></a>
+## 0.1.0 (2015-01-30)
+
+* $ref and allOf property support (by @jhony-chikens) ([e2dd6c90](http://github.com/chute/json-schema-defaults/commit/e2dd6c904e6df7866f99c7691e1c63ecd7ff3ca5))
+
+
 <a name="0.0.2"></a>
 ### 0.0.2 (2014-05-04)
 
